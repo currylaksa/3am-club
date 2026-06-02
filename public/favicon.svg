@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="3AM Club">
+  <!-- Original artwork: night sky, crescent moon, a sleepy owl, a football. No third-party marks. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#075239"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#sky)"/>
+  <!-- crescent moon -->
+  <path d="M392 96a112 112 0 1 0 0 176 92 92 0 0 1 0-176z" fill="#f6e27a"/>
+  <!-- owl body -->
+  <ellipse cx="216" cy="300" rx="110" ry="118" fill="#0b6e4f"/>
+  <ellipse cx="216" cy="318" rx="78" ry="86" fill="#0e8a63"/>
+  <!-- eyes (sleepy) -->
+  <circle cx="180" cy="270" r="30" fill="#0f172a"/>
+  <circle cx="252" cy="270" r="30" fill="#0f172a"/>
+  <path d="M156 270h48M228 270h48" stroke="#f6e27a" stroke-width="8" stroke-linecap="round"/>
+  <!-- beak -->
+  <path d="M216 292l-16 22h32z" fill="#f6e27a"/>
+  <!-- ears -->
+  <path d="M120 196l34 40-50 6zM312 196l-34 40 50 6z" fill="#0b6e4f"/>
+  <!-- football -->
+  <circle cx="356" cy="372" r="46" fill="#f8fafc"/>
+  <path d="M356 344l16 12-6 19h-20l-6-19z" fill="#0f172a"/>
+</svg>
