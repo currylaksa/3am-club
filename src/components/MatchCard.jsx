@@ -3,6 +3,7 @@ import { mytTime } from "../lib/time.js";
 import { STAGE_LABEL } from "../config/scoring.js";
 import VerdictBadge from "./VerdictBadge.jsx";
 import SleepCost from "./SleepCost.jsx";
+import LiveScore from "./LiveScore.jsx";
 
 export default function MatchCard({ fixture, onOpen }) {
   const { score, isFavorite } = fixture;
@@ -22,10 +23,16 @@ export default function MatchCard({ fixture, onOpen }) {
           {STAGE_LABEL[fixture.stage]}
         </span>
         <div className="flex items-center gap-2">
-          <span className="font-display text-xl font-bold tabular-nums">
-            {mytTime(fixture.kickoffUtc)}
-          </span>
-          <SleepCost cost={score.sleepCost} />
+          {fixture.live ? (
+            <LiveScore live={fixture.live} />
+          ) : (
+            <>
+              <span className="font-display text-xl font-bold tabular-nums">
+                {mytTime(fixture.kickoffUtc)}
+              </span>
+              <SleepCost cost={score.sleepCost} />
+            </>
+          )}
         </div>
       </div>
 

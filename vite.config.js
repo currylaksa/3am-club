@@ -34,6 +34,11 @@ export default defineConfig({
       workbox: {
         // App shell + baked fixtures precached -> works fully offline.
         globPatterns: ["**/*.{js,css,html,svg,png,json,woff2}"],
+        // Never let the SW serve cached /api responses — live data must be fresh.
+        navigateFallbackDenylist: [/^\/api\//],
+        runtimeCaching: [
+          { urlPattern: /^.*\/api\/.*$/, handler: "NetworkOnly" },
+        ],
       },
     }),
   ],

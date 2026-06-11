@@ -11,10 +11,10 @@ import Icon from "../components/Icon.jsx";
 // Light-hearted sleep-debt model: hours of sleep notionally sacrificed per match.
 const DEBT_HOURS = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4 };
 
-export default function MyPlan({ favorites, onOpenMatch }) {
+export default function MyPlan({ fixtures, liveById, favorites, onOpenMatch }) {
   const matches = useMemo(
-    () => fixturesForTeams(favorites, favorites),
-    [favorites]
+    () => fixturesForTeams(fixtures, favorites, favorites, liveById),
+    [fixtures, favorites, liveById]
   );
 
   const preDawn = matches.filter((m) => m.score.sleepCost >= 4).length;

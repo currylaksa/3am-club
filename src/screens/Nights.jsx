@@ -2,9 +2,12 @@ import { useMemo, useState } from "react";
 import { nightsView } from "../lib/fixtures.js";
 import MatchCard from "../components/MatchCard.jsx";
 
-export default function Nights({ favorites, onOpenMatch }) {
+export default function Nights({ fixtures, liveById, favorites, onOpenMatch }) {
   const [sort, setSort] = useState("time");
-  const nights = useMemo(() => nightsView(favorites, sort), [favorites, sort]);
+  const nights = useMemo(
+    () => nightsView(fixtures, favorites, sort, liveById),
+    [fixtures, favorites, sort, liveById]
+  );
 
   return (
     <div className="mx-auto max-w-md px-4 pb-28 pt-6">

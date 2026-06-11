@@ -5,6 +5,7 @@ import { STAGE_LABEL } from "../config/scoring.js";
 import { downloadIcs } from "../lib/ics.js";
 import VerdictBadge from "../components/VerdictBadge.jsx";
 import SleepCost from "../components/SleepCost.jsx";
+import LiveScore from "../components/LiveScore.jsx";
 import Icon from "../components/Icon.jsx";
 
 const LOG_OPTIONS = [
@@ -13,10 +14,10 @@ const LOG_OPTIONS = [
   ["skipped", "Skipped", "😴"],
 ];
 
-export default function MatchDetail({ id, favorites, watchLog, onClose, onSetLog, onToggleFav }) {
-  const base = findFixture(id);
+export default function MatchDetail({ id, fixtures, liveById, favorites, watchLog, onClose, onSetLog, onToggleFav }) {
+  const base = findFixture(fixtures, id);
   if (!base) return null;
-  const fixture = decorate(base, favorites);
+  const fixture = decorate(base, favorites, liveById);
   const { score } = fixture;
   const isTbd = fixture.homeTeam === "TBD";
   const current = watchLog[id];
@@ -43,14 +44,16 @@ export default function MatchDetail({ id, favorites, watchLog, onClose, onSetLog
           </h1>
         )}
 
-        <div className="mt-3 flex items-center gap-4 text-slate-300">
+        <div className="mt-3 flex flex-wrap items-center gap-4 text-slate-300">
           <span className="font-display text-2xl font-bold tabular-nums">{mytTime(fixture.kickoffUtc)}</span>
           <span>{mytDate(fixture.kickoffUtc)} MYT</span>
-          <SleepCost cost={score.sleepCost} showLabel />
+          {fixture.live ? <LiveScore live={fixture.live} /> : <SleepCost cost={score.sleepCost} showLabel />}
         </div>
-        <p className="mt-1 text-sm text-slate-500">
-          {fixture.venue}, {fixture.city}
-        </p>
+        {fixture.venue && (
+          <p className="mt-1 text-sm text-slate-500">
+            {fixture.venue}, {fixture.city}
+          </p>
+        )}
 
         <div className="mt-6 rounded-2xl bg-night-soft p-4">
           <div className="flex items-center justify-between">

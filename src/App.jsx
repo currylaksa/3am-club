@@ -6,6 +6,7 @@ import {
   saveSettings,
   resetAll,
 } from "./lib/state.js";
+import { useWorldCupData } from "./lib/useWorldCupData.js";
 import Landing from "./screens/Landing.jsx";
 import Onboarding from "./screens/Onboarding.jsx";
 import Nights from "./screens/Nights.jsx";
@@ -25,6 +26,7 @@ export default function App() {
   );
   const [tab, setTab] = useState("nights");
   const [openMatchId, setOpenMatchId] = useState(null);
+  const { fixtures, liveById } = useWorldCupData();
 
   const { favorites, watchLog, settings, installed } = state;
 
@@ -90,8 +92,22 @@ export default function App() {
         <InstallPrompt alreadyInstalled={installed} />
       </div>
 
-      {tab === "nights" && <Nights favorites={favorites} onOpenMatch={setOpenMatchId} />}
-      {tab === "plan" && <MyPlan favorites={favorites} onOpenMatch={setOpenMatchId} />}
+      {tab === "nights" && (
+        <Nights
+          fixtures={fixtures}
+          liveById={liveById}
+          favorites={favorites}
+          onOpenMatch={setOpenMatchId}
+        />
+      )}
+      {tab === "plan" && (
+        <MyPlan
+          fixtures={fixtures}
+          liveById={liveById}
+          favorites={favorites}
+          onOpenMatch={setOpenMatchId}
+        />
+      )}
       {tab === "settings" && (
         <Settings
           settings={settings}
@@ -109,6 +125,8 @@ export default function App() {
       {openMatchId && (
         <MatchDetail
           id={openMatchId}
+          fixtures={fixtures}
+          liveById={liveById}
           favorites={favorites}
           watchLog={watchLog}
           onClose={() => setOpenMatchId(null)}

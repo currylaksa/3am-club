@@ -2,32 +2,41 @@ import raw from "../data/fixtures.json";
 import { scoreFixture } from "./scoring.js";
 import { matchNightKey, nightLabel } from "./time.js";
 
-/** @typedef {{id:string,kickoffUtc:string,stage:string,groupName?:string,homeTeam:string,awayTeam:string,venue:string,city:string}} Fixture */
+/** @typedef {{id:string,kickoffUtc:string,stage:string,groupName?:string,homeTeam:string,awayTeam:string,venue:string|null,city:string|null}} Fixture */
+/** @typedef {{status:string,minute:number|null,homeGoals:number|null,awayGoals:number|null}} Live */
 
-/** All fixtures, chronological. */
+/** Baked fixtures, chronological — the offline fallback + first paint. */
 export const FIXTURES = [...raw].sort((a, b) =>
   a.kickoffUtc.localeCompare(b.kickoffUtc)
 );
 
-/** Attach scoring + night key to a fixture for the current favorites. */
-export function decorate(fixture, favorites) {
+/** Overlay the live `/api/fixtures` list onto the baked list by id (fills knockout teams). */
+export function mergeFixtures(base, remote) {
+  const byId = new Map(remote.map((f) => [f.id, f]));
+  return base.map((f) => byId.get(f.id) ?? f);
+}
+
+/** Attach scoring, night key, and any live score to a fixture. */
+export function decorate(fixture, favorites, liveById = {}) {
   return {
     ...fixture,
     nightKey: matchNightKey(fixture.kickoffUtc),
     score: scoreFixture(fixture, favorites),
     isFavorite:
       favorites.includes(fixture.homeTeam) || favorites.includes(fixture.awayTeam),
+    live: liveById[fixture.id] || null,
   };
 }
 
 /**
  * Decorate all fixtures and group them by match-night.
+ * @param {Fixture[]} fixtures
  * @param {string[]} favorites
  * @param {"time"|"importance"} sort
- * @returns {{ key:string, label:string, fixtures:any[] }[]}
+ * @param {Record<string,Live>} liveById
  */
-export function nightsView(favorites, sort = "time") {
-  const decorated = FIXTURES.map((f) => decorate(f, favorites));
+export function nightsView(fixtures, favorites, sort = "time", liveById = {}) {
+  const decorated = fixtures.map((f) => decorate(f, favorites, liveById));
   const byNight = new Map();
   for (const f of decorated) {
     if (!byNight.has(f.nightKey)) byNight.set(f.nightKey, []);
@@ -51,12 +60,12 @@ export function nightsView(favorites, sort = "time") {
 }
 
 /** Every fixture a favourited team appears in, chronological — for My Plan. */
-export function fixturesForTeams(teams, favorites) {
-  return FIXTURES.filter(
-    (f) => teams.includes(f.homeTeam) || teams.includes(f.awayTeam)
-  ).map((f) => decorate(f, favorites));
+export function fixturesForTeams(fixtures, teams, favorites, liveById = {}) {
+  return fixtures
+    .filter((f) => teams.includes(f.homeTeam) || teams.includes(f.awayTeam))
+    .map((f) => decorate(f, favorites, liveById));
 }
 
-export function findFixture(id) {
-  return FIXTURES.find((f) => f.id === id);
+export function findFixture(fixtures, id) {
+  return fixtures.find((f) => f.id === id);
 }

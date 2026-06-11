@@ -14,7 +14,8 @@ export function fixtureToIcs(fixture) {
     new Date(new Date(fixture.kickoffUtc).getTime() + 2 * 60 * 60 * 1000).toISOString()
   );
   const title = `${fixture.homeTeam} vs ${fixture.awayTeam}`;
-  const desc = `${STAGE_LABEL[fixture.stage]} · ${fixture.venue}, ${fixture.city} (3AM Club)`;
+  const place = fixture.venue ? `${fixture.venue}, ${fixture.city}` : "";
+  const desc = `${STAGE_LABEL[fixture.stage]}${place ? ` · ${place}` : ""} (3AM Club)`;
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -26,7 +27,7 @@ export function fixtureToIcs(fixture) {
     `DTEND:${end}`,
     `SUMMARY:${title}`,
     `DESCRIPTION:${desc}`,
-    `LOCATION:${fixture.venue}, ${fixture.city}`,
+    ...(place ? [`LOCATION:${place}`] : []),
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
