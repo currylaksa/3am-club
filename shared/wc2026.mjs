@@ -65,8 +65,9 @@ export function toFixture(m) {
   };
 }
 
-const LIVE_STATUSES = new Set(["IN_PLAY", "PAUSED"]);
-export const isLive = (status) => LIVE_STATUSES.has(status);
+// Matches worth showing a score for: in progress, at the break, or finished.
+const SHOWN_STATUSES = new Set(["IN_PLAY", "PAUSED", "FINISHED"]);
+export const isShown = (status) => SHOWN_STATUSES.has(status);
 
 /** A football-data match → the compact live payload merged onto fixtures by id. */
 export function toLive(m) {

@@ -3,7 +3,7 @@
 // only a handful of origin calls regardless of how many people are watching.
 // Returns { degraded:true, live:[] } instead of failing if the upstream errors.
 
-import { FD_BASE, FD_COMPETITION, isLive, toLive } from "../../shared/wc2026.mjs";
+import { FD_BASE, FD_COMPETITION, isShown, toLive } from "../../shared/wc2026.mjs";
 
 const TTL = 90; // seconds
 
@@ -23,7 +23,7 @@ export async function onRequest(context) {
     );
     if (!upstream.ok) throw new Error(`upstream ${upstream.status}`);
     const data = await upstream.json();
-    const live = (data.matches || []).filter((m) => isLive(m.status)).map(toLive);
+    const live = (data.matches || []).filter((m) => isShown(m.status)).map(toLive);
     body = { degraded: false, live };
   } catch {
     body = { degraded: true, live: [] };

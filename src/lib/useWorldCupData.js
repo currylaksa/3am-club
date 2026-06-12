@@ -39,15 +39,13 @@ export function useWorldCupData() {
     };
   }, []);
 
-  // Live scores.
+  // Scores: /api/live returns every in-progress AND finished match, so one fetch
+  // gives a complete picture (live scores + final results). Fetch on load and on
+  // tab focus; keep polling only while a match is in progress (free-tier quota).
   useEffect(() => {
     let cancelled = false;
-    const tick = async () => {
+    const fetchScores = async () => {
       if (document.visibilityState !== "visible") return;
-      if (!anyInProgress(fixtures)) {
-        setLiveById((m) => (Object.keys(m).length ? {} : m)); // drop stale scores
-        return;
-      }
       try {
         const data = await (await fetch("/api/live")).json();
         if (cancelled) return;
@@ -58,9 +56,11 @@ export function useWorldCupData() {
         /* transient — keep last good scores */
       }
     };
-    tick();
-    const timer = setInterval(tick, LIVE_POLL_MS);
-    const onVis = () => document.visibilityState === "visible" && tick();
+    fetchScores(); // immediate, regardless of whether anything is live now
+    const timer = setInterval(() => {
+      if (anyInProgress(fixtures)) fetchScores();
+    }, LIVE_POLL_MS);
+    const onVis = () => document.visibilityState === "visible" && fetchScores();
     document.addEventListener("visibilitychange", onVis);
     return () => {
       cancelled = true;
