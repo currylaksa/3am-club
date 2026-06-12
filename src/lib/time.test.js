@@ -23,24 +23,24 @@ describe("MYT timezone conversion", () => {
   });
 });
 
-describe("match-night grouping", () => {
-  it("groups a pre-dawn match with the previous evening", () => {
-    // 05:00 MYT on the 15th belongs to the night of the 14th
-    expect(matchNightKey("2026-06-14T21:00:00Z")).toBe("2026-06-14");
+describe("match-day grouping (actual MYT calendar date)", () => {
+  it("groups a pre-dawn match under its own morning's date", () => {
+    // 05:00 MYT on the 15th -> the 15th
+    expect(matchNightKey("2026-06-14T21:00:00Z")).toBe("2026-06-15");
   });
 
   it("groups an evening kickoff with its own date", () => {
-    // 21:00 MYT on the 14th -> night of the 14th
+    // 21:00 MYT on the 14th -> the 14th
     expect(matchNightKey("2026-06-14T13:00:00Z")).toBe("2026-06-14");
   });
 
-  it("starts a fresh night at the 10:00 MYT cutoff", () => {
-    // 13:00 MYT daytime on the 15th -> its own night, the 15th
+  it("groups a daytime match with its own date", () => {
+    // 13:00 MYT on the 15th -> the 15th
     expect(matchNightKey("2026-06-15T05:00:00Z")).toBe("2026-06-15");
   });
 
-  it("a 09:00 MYT early match still belongs to the night before", () => {
-    // 01:00Z -> 09:00 MYT on the 15th -> night of the 14th
-    expect(matchNightKey("2026-06-15T01:00:00Z")).toBe("2026-06-14");
+  it("groups a 09:00 MYT early match with that same day", () => {
+    // 01:00Z -> 09:00 MYT on the 15th -> the 15th
+    expect(matchNightKey("2026-06-15T01:00:00Z")).toBe("2026-06-15");
   });
 });

@@ -59,22 +59,15 @@ export function mytDate(kickoffUtc) {
 }
 
 /**
- * The "match night" a fixture belongs to, as a YYYY-MM-DD key.
- *
- * A viewing night runs ~18:00 MYT through ~10:00 MYT the next morning, so an
- * early-hours kickoff groups with the evening before (a 3 AM match on the 15th
- * belongs to the night of the 14th). Anything from 10:00 MYT onward starts a
- * fresh night/day.
+ * The match-day a fixture belongs to, as a YYYY-MM-DD key — the fixture's actual
+ * MYT calendar date. A 03:00 MYT kickoff groups under that morning's date.
  * @param {string} kickoffUtc
- * @returns {string} e.g. "2026-06-14"
+ * @returns {string} e.g. "2026-06-12"
  */
 export function matchNightKey(kickoffUtc) {
-  const { year, month, day, hour } = mytParts(kickoffUtc);
-  let ms = Date.UTC(year, month - 1, day);
-  if (hour < 10) ms -= 86400000; // belongs to the previous evening's night
-  const d = new Date(ms);
+  const { year, month, day } = mytParts(kickoffUtc);
   const p = (n) => String(n).padStart(2, "0");
-  return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}`;
+  return `${year}-${p(month)}-${p(day)}`;
 }
 
 /** Human label for a match-night key, e.g. "Sunday, 14 June". */
