@@ -3,6 +3,7 @@ import Icon from "./Icon.jsx";
 const TABS = [
   ["nights", "Nights", "moon"],
   ["plan", "My Plan", "plan"],
+  ["table", "Tables", "table"],
   ["settings", "Settings", "settings"],
 ];
 

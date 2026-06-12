@@ -11,6 +11,7 @@ import Landing from "./screens/Landing.jsx";
 import Onboarding from "./screens/Onboarding.jsx";
 import Nights from "./screens/Nights.jsx";
 import MyPlan from "./screens/MyPlan.jsx";
+import Standings from "./screens/Standings.jsx";
 import Settings from "./screens/Settings.jsx";
 import MatchDetail from "./screens/MatchDetail.jsx";
 import TabBar from "./components/TabBar.jsx";
@@ -107,6 +108,9 @@ export default function App() {
           favorites={favorites}
           onOpenMatch={setOpenMatchId}
         />
+      )}
+      {tab === "table" && (
+        <Standings fixtures={fixtures} liveById={liveById} favorites={favorites} />
       )}
       {tab === "settings" && (
         <Settings
