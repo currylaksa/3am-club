@@ -35,6 +35,9 @@ export default function App() {
   useEffect(() => saveWatchLog(watchLog), [watchLog]);
   useEffect(() => saveSettings(settings), [settings]);
 
+  // Each tab should open at the top, not inherit the previous tab's scroll.
+  useEffect(() => window.scrollTo(0, 0), [tab]);
+
   const setFavorites = (next) => setState((s) => ({ ...s, favorites: next }));
 
   const markOnboarded = () => {
