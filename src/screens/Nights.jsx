@@ -10,7 +10,7 @@ export default function Nights({ fixtures, liveById, favorites, onOpenMatch }) {
   );
 
   return (
-    <div className="mx-auto max-w-md px-4 pb-28 pt-6">
+    <div className="mx-auto max-w-md px-4 pb-28 pt-6 lg:max-w-5xl">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold">Your Nights</h1>
@@ -35,10 +35,10 @@ export default function Nights({ fixtures, liveById, favorites, onOpenMatch }) {
         </div>
       </header>
 
-      <div className="mt-6 space-y-8">
+      <div className="mt-6 space-y-8 lg:columns-2 lg:gap-8 lg:space-y-0">
         {nights.map((night) => (
-          <section key={night.key}>
-            <h2 className="sticky top-0 z-10 -mx-4 bg-night/90 px-4 py-2 text-sm font-bold text-emerald-300 backdrop-blur">
+          <section key={night.key} className="lg:mb-8 lg:break-inside-avoid">
+            <h2 className="sticky top-0 z-10 -mx-4 bg-night/90 px-4 py-2 text-sm font-bold text-emerald-300 backdrop-blur lg:static lg:mx-0 lg:rounded-md lg:px-3">
               {night.label}
             </h2>
             <div className="mt-3 space-y-3">

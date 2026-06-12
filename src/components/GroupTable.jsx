@@ -20,7 +20,7 @@ const NUM = "px-1.5 py-2 text-center tabular-nums";
 
 export default function GroupTable({ letter, rows, favorites = [] }) {
   return (
-    <section>
+    <section className="lg:mb-8 lg:break-inside-avoid">
       <h3 className="mb-1 font-display text-lg font-bold">Group {letter}</h3>
       <div className="overflow-x-auto rounded-2xl bg-night-soft">
         <table className="w-full min-w-[460px] text-sm">

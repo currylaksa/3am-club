@@ -8,11 +8,11 @@ export default function Standings({ fixtures, liveById, favorites }) {
   const standings = useMemo(() => computeStandings(fixtures, liveById), [fixtures, liveById]);
 
   return (
-    <div className="mx-auto max-w-md px-4 pb-28 pt-6">
+    <div className="mx-auto max-w-md px-4 pb-28 pt-6 lg:max-w-6xl">
       <h1 className="font-display text-3xl font-bold">Tables</h1>
       <p className="text-sm text-slate-400">Group standings &amp; knockout bracket</p>
 
-      <div className="mt-4 flex rounded-lg bg-night-soft p-1 text-sm font-semibold">
+      <div className="mt-4 flex max-w-sm rounded-lg bg-night-soft p-1 text-sm font-semibold">
         {[
           ["group", "Group Stage"],
           ["knockout", "Knockout"],
@@ -31,7 +31,7 @@ export default function Standings({ fixtures, liveById, favorites }) {
       </div>
 
       {view === "group" ? (
-        <div className="mt-6 space-y-8">
+        <div className="mt-6 space-y-8 lg:columns-2 lg:gap-8 lg:space-y-0">
           {Object.entries(standings).map(([letter, rows]) => (
             <GroupTable key={letter} letter={letter} rows={rows} favorites={favorites} />
           ))}

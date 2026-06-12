@@ -51,7 +51,7 @@ export default function MyPlan({ fixtures, liveById, favorites, onOpenMatch }) {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 pb-28 pt-6">
+    <div className="mx-auto max-w-md px-4 pb-28 pt-6 lg:max-w-4xl">
       <h1 className="font-display text-3xl font-bold">My Plan</h1>
       <p className="text-sm text-slate-400">
         Following {favorites.map((t) => flag(t)).join(" ")} {favorites.join(", ")}
@@ -72,7 +72,7 @@ export default function MyPlan({ fixtures, liveById, favorites, onOpenMatch }) {
       </button>
 
       <h2 className="mt-8 text-sm font-bold text-slate-400">The path ahead</h2>
-      <ol className="mt-3 space-y-3">
+      <ol className="mt-3 space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
         {matches.map((m) => (
           <li key={m.id}>
             <button
