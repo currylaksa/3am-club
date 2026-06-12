@@ -25,7 +25,7 @@ export default function Nights({ fixtures, liveById, favorites, onOpenMatch }) {
               key={val}
               onClick={() => setSort(val)}
               aria-pressed={sort === val}
-              className={`cursor-pointer rounded-md px-3 py-1.5 transition-colors ${
+              className={`inline-flex min-h-11 cursor-pointer items-center justify-center rounded-md px-3 transition-colors ${
                 sort === val ? "bg-pitch text-white" : "text-slate-400"
               }`}
             >

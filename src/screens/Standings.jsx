@@ -21,7 +21,7 @@ export default function Standings({ fixtures, liveById, favorites }) {
             key={val}
             onClick={() => setView(val)}
             aria-pressed={view === val}
-            className={`flex-1 cursor-pointer rounded-md px-3 py-1.5 transition-colors ${
+            className={`flex min-h-11 flex-1 cursor-pointer items-center justify-center rounded-md px-3 transition-colors ${
               view === val ? "bg-pitch text-white" : "text-slate-400"
             }`}
           >

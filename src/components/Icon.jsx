@@ -49,6 +49,8 @@ const PATHS = {
       <path d="m6 6 12 12" />
     </>
   ),
+  check: <path d="M20 6 9 17l-5-5" />,
+  minus: <path d="M5 12h14" />,
 };
 
 export default function Icon({ name, className = "h-6 w-6", ...rest }) {

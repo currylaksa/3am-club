@@ -1,4 +1,12 @@
 import { flag } from "../lib/flags.js";
+import Icon from "./Icon.jsx";
+
+const DOT = "grid h-4 w-4 place-items-center rounded-full";
+const RESULT = {
+  W: { cls: "bg-emerald-500 text-emerald-950", icon: "check", label: "Win" },
+  L: { cls: "bg-red-500 text-red-950", icon: "x", label: "Loss" },
+  D: { cls: "bg-slate-500 text-slate-900", icon: "minus", label: "Draw" },
+};
 
 // Form dots: most-recent-last, padded to 5 slots like the reference design.
 function FormDots({ form }) {
@@ -7,10 +15,13 @@ function FormDots({ form }) {
   return (
     <span className="inline-flex gap-1">
       {slots.map((r, i) => {
-        if (r === "W") return <span key={i} className="grid h-4 w-4 place-items-center rounded-full bg-emerald-500 text-[9px] font-bold text-emerald-950">✓</span>;
-        if (r === "L") return <span key={i} className="grid h-4 w-4 place-items-center rounded-full bg-red-500 text-[9px] font-bold text-red-950">✕</span>;
-        if (r === "D") return <span key={i} className="grid h-4 w-4 place-items-center rounded-full bg-slate-500 text-[9px] font-bold text-slate-900">–</span>;
-        return <span key={i} className="h-4 w-4 rounded-full ring-1 ring-inset ring-slate-600" />;
+        const res = RESULT[r];
+        if (!res) return <span key={i} className="h-4 w-4 rounded-full ring-1 ring-inset ring-slate-600" />;
+        return (
+          <span key={i} className={`${DOT} ${res.cls}`} title={res.label}>
+            <Icon name={res.icon} className="h-3 w-3" strokeWidth="3" />
+          </span>
+        );
       })}
     </span>
   );
