@@ -115,6 +115,7 @@ no betting. Team names and fixtures are stated as plain facts. Fixture data via
 <div align="center">
 
 Built solo by a Malaysian football fan who got tired of guessing which 3 AM kickoffs were worth it.
+
 **Free forever · no ads · no tracking.** ☕
 
 </div>
