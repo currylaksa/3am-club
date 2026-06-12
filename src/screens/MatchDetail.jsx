@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { findFixture, decorate } from "../lib/fixtures.js";
 import { flag } from "../lib/flags.js";
 import { mytTime, mytDate } from "../lib/time.js";
@@ -14,13 +15,15 @@ const LOG_OPTIONS = [
   ["skipped", "Skipped", "😴"],
 ];
 
-export default function MatchDetail({ id, fixtures, liveById, favorites, watchLog, onClose, onSetLog, onToggleFav }) {
+export default function MatchDetail({ id, fixtures, liveById, favorites, watchLog, spoilerFree, onClose, onSetLog, onToggleFav }) {
+  const [revealed, setRevealed] = useState(false);
   const base = findFixture(fixtures, id);
   if (!base) return null;
   const fixture = decorate(base, favorites, liveById);
   const { score } = fixture;
   const isTbd = fixture.homeTeam === "TBD";
   const current = watchLog[id];
+  const showScore = fixture.live && (!spoilerFree || current === "watched" || revealed);
 
   return (
     <div className="fixed inset-0 z-30 overflow-y-auto bg-night">
@@ -47,7 +50,18 @@ export default function MatchDetail({ id, fixtures, liveById, favorites, watchLo
         <div className="mt-3 flex flex-wrap items-center gap-4 text-slate-300">
           <span className="font-display text-2xl font-bold tabular-nums">{mytTime(fixture.kickoffUtc)}</span>
           <span>{mytDate(fixture.kickoffUtc)} MYT</span>
-          {fixture.live ? <LiveScore live={fixture.live} /> : <SleepCost cost={score.sleepCost} showLabel />}
+          {showScore ? (
+            <LiveScore live={fixture.live} />
+          ) : fixture.live ? (
+            <button
+              onClick={() => setRevealed(true)}
+              className="cursor-pointer rounded-md bg-night-soft px-3 py-1 text-xs font-semibold text-slate-300 ring-1 ring-slate-600 transition-colors hover:text-white"
+            >
+              Show score (spoiler)
+            </button>
+          ) : (
+            <SleepCost cost={score.sleepCost} showLabel />
+          )}
         </div>
         {fixture.venue && (
           <p className="mt-1 text-sm text-slate-500">

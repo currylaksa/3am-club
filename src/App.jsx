@@ -98,6 +98,8 @@ export default function App() {
           fixtures={fixtures}
           liveById={liveById}
           favorites={favorites}
+          watchLog={watchLog}
+          spoilerFree={settings.spoilerFree}
           onOpenMatch={setOpenMatchId}
         />
       )}
@@ -110,7 +112,12 @@ export default function App() {
         />
       )}
       {tab === "table" && (
-        <Standings fixtures={fixtures} liveById={liveById} favorites={favorites} />
+        <Standings
+          fixtures={fixtures}
+          liveById={liveById}
+          favorites={favorites}
+          spoilerFree={settings.spoilerFree}
+        />
       )}
       {tab === "settings" && (
         <Settings
@@ -133,6 +140,7 @@ export default function App() {
           liveById={liveById}
           favorites={favorites}
           watchLog={watchLog}
+          spoilerFree={settings.spoilerFree}
           onClose={() => setOpenMatchId(null)}
           onSetLog={setLog}
           onToggleFav={toggleFavFromMatch}

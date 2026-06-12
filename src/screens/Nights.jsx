@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { nightsView } from "../lib/fixtures.js";
 import MatchCard from "../components/MatchCard.jsx";
 
-export default function Nights({ fixtures, liveById, favorites, onOpenMatch }) {
+export default function Nights({ fixtures, liveById, favorites, watchLog = {}, spoilerFree, onOpenMatch }) {
   const [sort, setSort] = useState("time");
   const nights = useMemo(
     () => nightsView(fixtures, favorites, sort, liveById),
@@ -43,7 +43,12 @@ export default function Nights({ fixtures, liveById, favorites, onOpenMatch }) {
             </h2>
             <div className="mt-3 space-y-3">
               {night.fixtures.map((f) => (
-                <MatchCard key={f.id} fixture={f} onOpen={onOpenMatch} />
+                <MatchCard
+                  key={f.id}
+                  fixture={f}
+                  hideScore={spoilerFree && watchLog[f.id] !== "watched"}
+                  onOpen={onOpenMatch}
+                />
               ))}
             </div>
           </section>

@@ -11,7 +11,7 @@ export default function Settings({ settings, onChangeSettings, onEditTeams, onRe
           <div>
             <div className="font-semibold">Spoiler-free mode</div>
             <div className="text-xs text-slate-400">
-              Hide scores for matches you haven't marked watched (v2 results).
+              Hide live &amp; final scores until you mark a match watched.
             </div>
           </div>
           <Toggle

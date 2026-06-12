@@ -5,9 +5,10 @@ import VerdictBadge from "./VerdictBadge.jsx";
 import SleepCost from "./SleepCost.jsx";
 import LiveScore from "./LiveScore.jsx";
 
-export default function MatchCard({ fixture, onOpen }) {
+export default function MatchCard({ fixture, hideScore = false, onOpen }) {
   const { score, isFavorite } = fixture;
   const isTbd = fixture.homeTeam === "TBD";
+  const showLive = fixture.live && !hideScore;
   return (
     <button
       onClick={() => onOpen(fixture.id)}
@@ -23,10 +24,13 @@ export default function MatchCard({ fixture, onOpen }) {
           {STAGE_LABEL[fixture.stage]}
         </span>
         <div className="flex items-center gap-2">
-          {fixture.live ? (
+          {showLive ? (
             <LiveScore live={fixture.live} />
           ) : (
             <>
+              {fixture.live && hideScore && (
+                <span className="text-[11px] font-semibold uppercase text-slate-500">Hidden</span>
+              )}
               <span className="font-display text-xl font-bold tabular-nums">
                 {mytTime(fixture.kickoffUtc)}
               </span>
