@@ -38,7 +38,7 @@ export default function Nights({ fixtures, liveById, favorites, watchLog = {}, s
       <div className="mt-6 space-y-8 lg:columns-2 lg:gap-8 lg:space-y-0">
         {nights.map((night) => (
           <section key={night.key} className="lg:mb-8 lg:break-inside-avoid">
-            <h2 className="sticky top-0 z-10 -mx-4 bg-night/90 px-4 py-2 text-sm font-bold text-emerald-300 backdrop-blur lg:static lg:mx-0 lg:rounded-md lg:px-3">
+            <h2 className="sticky top-[env(safe-area-inset-top)] z-10 -mx-4 bg-night/90 px-4 py-2 text-sm font-bold text-emerald-300 backdrop-blur lg:static lg:mx-0 lg:rounded-md lg:px-3">
               {night.label}
             </h2>
             <div className="mt-3 space-y-3">

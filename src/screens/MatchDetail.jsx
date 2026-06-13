@@ -27,7 +27,7 @@ export default function MatchDetail({ id, fixtures, liveById, favorites, watchLo
 
   return (
     <div className="fixed inset-0 z-30 overflow-y-auto bg-night">
-      <div className="mx-auto max-w-md px-4 pb-28 pt-6">
+      <div className="mx-auto max-w-md px-4 pb-28 pt-[calc(env(safe-area-inset-top)+1.5rem)]">
         <button onClick={onClose} className="mb-4 cursor-pointer text-sm text-slate-400 transition-colors hover:text-slate-200">
           ← Back to nights
         </button>
